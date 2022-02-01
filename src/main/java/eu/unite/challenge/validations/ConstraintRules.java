@@ -34,4 +34,10 @@ public class ConstraintRules {
      */
     public static final int SCALE = 8;
 
+
+    /*
+     * DynamicProgramming requires a table of order O(N*W),  where N is the number of items, and W is the possible  number of values for weight. The following constant  gives an upper bound for W.
+     */
+    public static final int MAX_INT_WEIGHT_FOR_DP = 10000;
+
 }
