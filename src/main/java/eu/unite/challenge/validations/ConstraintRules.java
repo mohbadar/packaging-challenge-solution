@@ -1,4 +1,4 @@
-package eu.unite.unitechallenge.validations;
+package eu.unite.challenge.validations;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;

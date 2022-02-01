@@ -1,4 +1,4 @@
-package eu.unite.unitechallenge.validations;
+package eu.unite.challenge.validations;
 
 
 import net.jcip.annotations.Immutable;
