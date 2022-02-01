@@ -23,8 +23,8 @@ import java.util.TreeSet;
  * correctness of other algorithms on thousands of random problem instances.
  */
 @Immutable
-public final class BruteForce extends AbstractProblemSolver {
-    public BruteForce(final RecordInstance problemInstance) {
+public final class BruteForceAlgoImpl extends AbstractProblemSolver {
+    public BruteForceAlgoImpl(final RecordInstance problemInstance) {
         super(problemInstance);
     }
 

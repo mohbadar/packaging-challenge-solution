@@ -23,14 +23,14 @@ import static eu.unite.challenge.validations.ConstraintRules.MAX_INT_WEIGHT_FOR_
  * It works by trading space for time: A large table is
  * used to memoize state for subproblems. For this specific
  * problem, the parameters are such that the running time
- * of {@code DynamicProgramming} is worse than that of {@link BruteForce},
+ * of {@code DynamicProgrammingAlgoImpl} is worse than that of {@link BruteForceAlgoImpl},
  * and it even uses much more RAM.
  */
 @Immutable
-public class DynamicProgramming extends AbstractProblemSolver {
-    private static final Logger logger = LoggerFactory.getLogger(DynamicProgramming.class);
+public class DynamicProgrammingAlgoImpl extends AbstractProblemSolver {
+    private static final Logger logger = LoggerFactory.getLogger(DynamicProgrammingAlgoImpl.class);
 
-    public DynamicProgramming(final RecordInstance problemInstance) {
+    public DynamicProgrammingAlgoImpl(final RecordInstance problemInstance) {
         super(problemInstance);
     }
 

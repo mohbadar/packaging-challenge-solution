@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
  * achieved over thousands of random problem instances.
  */
 @Immutable
-public final class GreedyApproximation extends AbstractProblemSolver {
-    private static final Logger logger = LoggerFactory.getLogger(GreedyApproximation.class);
+public final class GreedyApproximationAlgoImpl extends AbstractProblemSolver {
+    private static final Logger logger = LoggerFactory.getLogger(GreedyApproximationAlgoImpl.class);
 
-    public GreedyApproximation(final RecordInstance problemInstance) {
+    public GreedyApproximationAlgoImpl(final RecordInstance problemInstance) {
         super(problemInstance);
     }
 

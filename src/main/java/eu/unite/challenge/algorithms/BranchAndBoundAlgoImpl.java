@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 import static eu.unite.challenge.validations.ConstraintRules.SCALE;
 
 /**
- * {@code BranchAndBound} is similar to {@link BruteForce},
+ * {@code BranchAndBoundAlgoImpl} is similar to {@link BruteForceAlgoImpl},
  * but it uses heuristics so that only plausible solutions
  * in the solution space are traversed. The order of
  * traversal is also optimized. The solution space can be
  * seen as a binary tree. For node {@code i}, the left edge denotes
  * leaving the {@code i+1} item, while the right edge denotes
  * taking it. For each node, a bound is computed using
- * the heuristic similar to { GreedyApproximation}
+ * the heuristic similar to { GreedyApproximationAlgoImpl}
  * (but where we can pick a fraction of items). A subtree
  * is pruned if
  * <ol>
@@ -30,7 +30,7 @@ import static eu.unite.challenge.validations.ConstraintRules.SCALE;
  * </ol>
  */
 @Immutable
-public final class BranchAndBound extends AbstractProblemSolver {
+public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
 
     private BigDecimal maxWeight;
     private List<Item> sorted;
@@ -39,7 +39,7 @@ public final class BranchAndBound extends AbstractProblemSolver {
     private BigDecimal bestWeight;
     private SortedSet<Integer> bestLabels;
 
-    public BranchAndBound(final RecordInstance problemInstance) {
+    public BranchAndBoundAlgoImpl(final RecordInstance problemInstance) {
         super(problemInstance);
     }
 

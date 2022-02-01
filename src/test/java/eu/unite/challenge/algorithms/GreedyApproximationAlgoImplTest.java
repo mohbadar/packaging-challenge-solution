@@ -1,8 +1,8 @@
 package eu.unite.challenge.algorithms;
 
 
-import eu.unite.challenge.datastructures.Package;
-import eu.unite.challenge.datastructures.RecordInstance;
+import eu.unite.challenge.dataobjects.Package;
+import eu.unite.challenge.dataobjects.RecordInstance;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GreedyApproximationTest {
-    private static final Logger logger = LoggerFactory.getLogger(GreedyApproximationTest.class);
+class GreedyApproximationAlgoImplTest {
+    private static final Logger logger = LoggerFactory.getLogger(GreedyApproximationAlgoImplTest.class);
 
 
     static final BigDecimal TWO = BigDecimal.valueOf(2);
 
     @ParameterizedTest
-    @MethodSource("eu.unite.challenge.TestCaseSources#givenTestCase")
+    @MethodSource("eu.unite.challenge.sources.TestCaseSources#givenTestCase")
     void greedySolve(final int lineNo, final String line, final String solution) {
         RecordInstance p = assertDoesNotThrow(() -> new RecordInstance(lineNo, line));
 
@@ -38,7 +38,7 @@ class GreedyApproximationTest {
 
         Package bag = new Package(p.getMap(), sol);
 
-        GreedyApproximation ga = new GreedyApproximation(p);
+        GreedyApproximationAlgoImpl ga = new GreedyApproximationAlgoImpl(p);
 
         if (sol != null)
             assertTrue(ga.getBag().getResultPrice().compareTo(bag.getResultPrice().multiply(TWO)) < 0);
@@ -51,19 +51,19 @@ class GreedyApproximationTest {
     @Test
     void greedyEdgeCase() throws Exception {
         RecordInstance p = new RecordInstance(1, "10 : (1, 1, €1) (2, 10, €9)");
-        GreedyApproximation ga = new GreedyApproximation(p);
+        GreedyApproximationAlgoImpl ga = new GreedyApproximationAlgoImpl(p);
         assertEquals(BigDecimal.valueOf(9), ga.getBag().getResultPrice());
         logger.trace(ga.getBag().toString());
     }
 
     @ParameterizedTest
-    @MethodSource("eu.unite.challenge.TestCaseSources#randomSource")
+    @MethodSource("eu.unite.challenge.sources.TestCaseSources#randomSource")
     void randomCase(final int lineNo, final String line) {
         logger.trace("{} --- {}\n", lineNo, line);
 
         RecordInstance p = assertDoesNotThrow(() -> new RecordInstance(lineNo, line));
-        BruteForce bf = new BruteForce(p);
-        GreedyApproximation ga = new GreedyApproximation(p);
+        BruteForceAlgoImpl bf = new BruteForceAlgoImpl(p);
+        GreedyApproximationAlgoImpl ga = new GreedyApproximationAlgoImpl(p);
 
         Package bfBag = bf.getBag();
         Package gaBag = ga.getBag();

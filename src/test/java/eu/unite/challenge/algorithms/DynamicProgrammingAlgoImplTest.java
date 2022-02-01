@@ -21,8 +21,8 @@ import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DynamicProgrammingTest {
-    private static final Logger logger = LoggerFactory.getLogger(DynamicProgramming.class);
+class DynamicProgrammingAlgoImplTest {
+    private static final Logger logger = LoggerFactory.getLogger(DynamicProgrammingAlgoImpl.class);
 
     static Random r = new Random();
 
@@ -35,7 +35,7 @@ class DynamicProgrammingTest {
                 new Item(4, "4, 3.5, €50")
         );
 
-        SortedSet<Integer> indices = DynamicProgramming.dpSolve(BigDecimal.valueOf(10), 1, items);
+        SortedSet<Integer> indices = DynamicProgrammingAlgoImpl.dpSolve(BigDecimal.valueOf(10), 1, items);
         assertEquals(List.of(2, 4), new ArrayList<>(indices));
     }
 
@@ -48,7 +48,7 @@ class DynamicProgrammingTest {
                 new Item(4, "4, 3, €50")
         );
 
-        SortedSet<Integer> indices = DynamicProgramming.dpSolve(BigDecimal.valueOf(10), 1, items);
+        SortedSet<Integer> indices = DynamicProgrammingAlgoImpl.dpSolve(BigDecimal.valueOf(10), 1, items);
         assertEquals(List.of(3, 4), new ArrayList<>(indices));
     }
 
@@ -56,7 +56,7 @@ class DynamicProgrammingTest {
     void testHuge() throws LineFormatException {
         RecordInstance p = new RecordInstance(1, "99.8135: (1, 5.33, €10)");
         assertThrows(OutOfRangeProblemSizeException.class, () ->
-                new DynamicProgramming(p));
+                new DynamicProgrammingAlgoImpl(p));
     }
 
     @ParameterizedTest
@@ -65,8 +65,8 @@ class DynamicProgrammingTest {
         logger.trace("{} --- {}\n", lineNo, line);
 
         RecordInstance p = assertDoesNotThrow(() -> new RecordInstance(lineNo, line));
-        BruteForce bf = new BruteForce(p);
-        DynamicProgramming dp = new DynamicProgramming(p);
+        BruteForceAlgoImpl bf = new BruteForceAlgoImpl(p);
+        DynamicProgrammingAlgoImpl dp = new DynamicProgrammingAlgoImpl(p);
 
         Package bfBag = bf.getBag();
         Package dpBag = dp.getBag();

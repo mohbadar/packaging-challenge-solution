@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BranchAndBoundTest {
-    private static final Logger logger = LoggerFactory.getLogger(BranchAndBoundTest.class);
+class BranchAndBoundAlgoImplTest {
+    private static final Logger logger = LoggerFactory.getLogger(BranchAndBoundAlgoImplTest.class);
 
     @ParameterizedTest
     @MethodSource("eu.unite.challenge.sources.TestCaseSources#randomSource")
@@ -22,8 +22,8 @@ class BranchAndBoundTest {
         logger.trace("{} --- {}\n", lineNo, line);
 
         RecordInstance p = assertDoesNotThrow(() -> new RecordInstance(lineNo, line));
-        BruteForce bf = new BruteForce(p);
-        BranchAndBound bb = new BranchAndBound(p);
+        BruteForceAlgoImpl bf = new BruteForceAlgoImpl(p);
+        BranchAndBoundAlgoImpl bb = new BranchAndBoundAlgoImpl(p);
 
         Package bfBag = bf.getBag();
         Package bbBag = bb.getBag();
