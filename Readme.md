@@ -7,6 +7,7 @@
 4) Main Tasks of Development and Development Progress Tracking Through Github Issues
 5) Running the code
 6) Testing the code
+7) References
 
 ## 1. Problem Description
 
@@ -53,9 +54,79 @@ The sample output for the sample input file above should look like this:
 ```
 
 ## 2. Requirements Analysis
-//to do
+This problem belongs to a well-known family of problems called [knapsack problems](https://en.wikipedia.org/wiki/Knapsack_problem). The [several variants](https://en.wikipedia.org/wiki/List_of_knapsack_problems) of this problem can be found in this link. This problem has the following characterizations: 
+
+1. It's a 0-1 knapsack: Each item is either taken or left.
+2. If two subsets of items have equal costs, the one which is lighter (has lower weight) prevails.
+
+Like 0-1 knapsack, the problem is an [NP-complete](https://en.wikipedia.org/wiki/NP-completeness) problem, meaning there is currently no known **efficient** (i.e., polynomial-time) algorithm to solve it. However,
+
+1. It is [weakly NP-complete](https://en.wikipedia.org/wiki/Weak_NP-completeness), meaning it has a [pseudo-polynomial-time algorithm](https://en.wikipedia.org/wiki/Pseudo-polynomial_time). In simpler terms, the issue can be solved in polynomial time if the numerical values involved in the problem specification (such as the weights) are small enough. This is often done via [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming).
+
+2. A variation where we can take fractions of an item (e.g., half of item 3) can be solved efficiently using a [greedy algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm): Items are first sorted in decreasing **efficiency** (= cost / weight). Whole items are taken in order, until the knapsack can't carry any more item. Then, a fraction of the most efficient remaining item is taken. This approach cannot be used for 0-1 knapsacks. However, it can be used as an approximation algorithm. There's a technicality, which allows this simple heuristic to perform arbitrarily bad. But with proper adjustments, we can get a 1/2 approximation: If the maximum possible cost is OPT, the heuristic guarantees a subset of items with cost at least OPT/2.
+
+3. The problem belongs to [FPTAS](https://en.wikipedia.org/wiki/Polynomial-time_approximation_scheme) class of problems. This means that there exist an efficient approximation which can get arbitrarily close to the solution. More formally, for any 0-1 knapsack problem P and any ε>0, we can get a solution whose cost is at least (1-ε)OPT, while running in time polynomial in (|P|, 1/ε), where |P| is the size of the problem.
+
+There are numerous algorithms from which to choose.
+Indeed, based on the problem description, the problem size |P| is so small that even brute forcing the solution is feasible. 
+
+To choose the optimal solution, there are few main question that need proper decisions:
+1. Is the parameters for the real-world problem are as small?
+2. Do weights always have up to two digits after the decimal point?
+3. Are costs always whole numbers?
+4. What is the encoding of the input file?
+5. What is the maximum size of the input file?
+6. How do you like to treat an input file which is malformed, after showing an error: Continue processing further lines, or stop the program?
+
+Currently, the client needs N=15 items tops. Tomorrow, there might be a requirement change and N=100. Considering the requirement changes, brute force is not a viable option.
+In this solution, we may use brute force to test other algorithms on small instances.
+
+
+
 ## 3. Design principles and Decisions
-//to do
+That's how we responded to the preceding section's questions: 
+
+1. In this solution, N is considered a small value, but, The real-world solution may require much larger parameters.
+2. That's unknown. Write a solution which handles arbitrary number of digits after decimal point.
+3. Costs can be positive real numbers.
+4. Default to UTF-8, but it needs to be configurable.
+5. Put a meaningful amount in configuration file. While it is possible to handle files of any size (by reading them partially or mapping views onto memory), such a change is not substantial and can be postponed.
+6. Continue processing further lines.
+
+The other design principles and decision are as follows:
+
+1. **Exploit immutability:** [Effective Java (EJ)](https://learning.oreilly.com/library/view/effective-java-3rd/9780134686097/), item 17 states "minimize mutability." There are so many good reasons to use immutable classes. For this project, it helped a lot when objects where passed between methods. Had it not been for immutability, it would have been possible for one method to inadvertently modify the object. It is a very helpful to annotate classes with [JCIP annotations](https://github.com/stephenc/jcip-annotations): For instance, immutable classes are annotated with `@Immutable`.
+
+2. **Use `final` classes:** This is a direct result of immutability, but even if a class is supposed to have subclasses, one can define it as `abstract` to prevent creation of instances. One the surface, this might seem contrary to the [open–closed principle](OCP), but it isn't. In fact, **EJ Item 18** explains how *inheritance violates encapsulation*, and that it's better to use composition over inheritance. Also, **EJ Item 19** lays down principles for designing a class for inheritance:
+
+ > The only way to test a class designed for inheritance is to write subclasses. If you omit a crucial protected member, trying to write a subclass will make the omission painfully obvious. Conversely, if several subclasses are written and none uses a protected member, you should probably make it private. Experience shows that three subclasses are usually sufficient to test an extendable class. One or more of these subclasses should be written by someone other than the superclass author.
+
+ The only class we designed for inheritance was `AbstractProblemSolver.java`, which has four subclasses: `BranchAndBound`, `BruteForce`, `DynamicProgramming` and `GreedyApproximation`.
+
+3. **Minimize access:** The member fields and member methods should have the minimal access. To quote **EJ Item 15** makes these statements:
+
+> The single most important factor that distinguishes a well-designed component from a poorly designed one is the degree to which the component hides its internal data and other implementation details from other components. A well-designed component hides all its implementation details, cleanly separating its API from its implementation. Components then communicate only through their APIs and are oblivious to each others’ inner workings. This concept, known as information hiding or encapsulation, is a fundamental tenet of software design.
+
+> For members of public classes, a huge increase in accessibility occurs when the access level goes from package-private to protected. A protected member is part of the class’s exported API and must be supported forever. Also, a protected member of an exported class represents a public commitment to an implementation detail (Item 19). The need for protected members should be relatively rare.
+
+While most members in our classes could be `private`, accessibility default (a.k.a. package-private) is chosen to facilitate testing in a more modular way (see next).
+
+4. **Use test-driven development (TDD):** Writing tests were a bliss. One can modify the design or the implementation, and in a blink of eye verify if it breaks anything. TDD is very useful, especially for agile development where refactoring occurs frequently.
+
+5. **Test coverage:** Once unite/integration tests are in place, one can check the coverage of those tests. Anything below 100% coverage shows some statements are not covered during the tests.
+6. Use `BigDecimal` to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods:
+```java
+BigDecimal a = new BigDecimal("12.345");
+BigDecimal b = new BigDecimal("6.78");
+BigDecimal c = a.subtract(BigDecimal.TEN).multiply(b);
+...
+if(c.compareTo(d) > = 0)
+...
+```
+
+7. **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used [SonarLint plugin for IntelliJ IDEA](https://www.sonarlint.org/intellij/). Among other things, it computed the [Cognitive Complexity™](https://www.sonarsource.com/resources/white-papers/cognitive-complexity.html) of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
+
+
 ## 4. Designing Solution
 //to do
 ## 5. Main Tasks of Development and Development Progress Tracking Through Github Issues
@@ -63,3 +134,16 @@ The sample output for the sample input file above should look like this:
 ## 6. Running the code
 //to do
 ## 7. Testing the code
+//to do
+## 8. References
+//to do
+- https://en.wikipedia.org/wiki/Knapsack_problem
+- https://en.wikipedia.org/wiki/List_of_knapsack_problems
+- https://en.wikipedia.org/wiki/NP-completeness
+- https://en.wikipedia.org/wiki/Weak_NP-completeness
+- https://en.wikipedia.org/wiki/Dynamic_programming
+- https://en.wikipedia.org/wiki/Greedy_algorithm
+- https://en.wikipedia.org/wiki/Polynomial-time_approximation_scheme
+- https://learning.oreilly.com/library/view/effective-java-3rd/9780134686097/
+- https://github.com/stephenc/jcip-annotations
+- https://www.sonarlint.org/intellij/)

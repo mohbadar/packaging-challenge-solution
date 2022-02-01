@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<guava.version>31.0.1-jre</guava.version>
+		<jcip.annotations.version>1.0</jcip.annotations.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -35,6 +36,11 @@
 			<version>${guava.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>net.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+			<version>${jcip.annotations.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
