@@ -60,7 +60,7 @@ class DynamicProgrammingTest {
     }
 
     @ParameterizedTest
-    @MethodSource("eu.unite.challenge.TestCaseSources#randomSource")
+    @MethodSource("eu.unite.challenge.sources.TestCaseSources#randomSource")
     void randomCase(final int lineNo, final String line) {
         logger.trace("{} --- {}\n", lineNo, line);
 
