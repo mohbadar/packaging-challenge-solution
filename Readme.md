@@ -154,6 +154,8 @@ The application consists of the following `packages` under the `eu.unite.challen
 - `validations`: contian constraint rules and regex-patterns classes for valiation
 
 ### 4.2 Classes
+
+![](doc/images/class-hierarchy.PNG)
 - `Application`: It is based in the top-level package, which contains the program entry point.
 
 - `algorithms`: The classes within the `algorithms` package are presented below:
@@ -218,11 +220,20 @@ java -jar target/unite-challenge-1.0.jar /file-absolute-path/sampleInpute.txt
 ````
 ## 7. Testing the code
 
+To run tests
+````java
+mvn clean test
+````
+
 - The test coverage is 100% 
-![](doc/test-coverage.PNG)
+![](doc/images/test-coverage.PNG)
 
 - All tests (3169) are successfully Passed
-![](doc/Test-Cases.PNG)
+![](doc/images/Test-Cases.PNG)
+
+
+#### JavaDoc Generation 
+
 
 ## 8. References
 - https://en.wikipedia.org/wiki/Knapsack_problem

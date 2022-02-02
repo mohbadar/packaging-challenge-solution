@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"eu.unite.challenge"},{"l":"eu.unite.challenge.algorithms"},{"l":"eu.unite.challenge.dataobjects"},{"l":"eu.unite.challenge.exceptions"},{"l":"eu.unite.challenge.sources"},{"l":"eu.unite.challenge.utils"},{"l":"eu.unite.challenge.validations"}]
