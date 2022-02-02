@@ -54,18 +54,18 @@ The sample output for the sample input file above should look like this:
 ```
 
 ## 2. Requirements Analysis
-This problem belongs to a well-known family of problems called [knapsack problems](https://en.wikipedia.org/wiki/Knapsack_problem). The [several variants](https://en.wikipedia.org/wiki/List_of_knapsack_problems) of this problem can be found in this link. This problem has the following characterizations: 
+This problem belongs to a well-known family of problems called knapsack problems. The several variants  of this problem can be found in this link. This problem has the following characterizations: 
 
 1. It's a 0-1 knapsack: Each item is either taken or left.
 2. If two subsets of items have equal costs, the one which is lighter (has lower weight) prevails.
 
-Like 0-1 knapsack, the problem is an [NP-complete](https://en.wikipedia.org/wiki/NP-completeness) problem, meaning there is currently no known **efficient** (i.e., polynomial-time) algorithm to solve it. However,
+Like 0-1 knapsack, the problem is an NP-complete problem, meaning there is currently no known **efficient** (i.e., polynomial-time) algorithm to solve it. However,
 
-1. It is [weakly NP-complete](https://en.wikipedia.org/wiki/Weak_NP-completeness), meaning it has a [pseudo-polynomial-time algorithm](https://en.wikipedia.org/wiki/Pseudo-polynomial_time). In simpler terms, the issue can be solved in polynomial time if the numerical values involved in the problem specification (such as the weights) are small enough. This is often done via [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming).
+1. It is weakly NP-complete, meaning it has a pseudo-polynomial-time algorithm. In simpler terms, the issue can be solved in polynomial time if the numerical values involved in the problem specification (such as the weights) are small enough. This is often done via dynamic programming.
 
-2. A variation where we can take fractions of an item (e.g., half of item 3) can be solved efficiently using a [greedy algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm): Items are first sorted in decreasing **efficiency** (= cost / weight). Whole items are taken in order, until the knapsack can't carry any more item. Then, a fraction of the most efficient remaining item is taken. This approach cannot be used for 0-1 knapsacks. However, it can be used as an approximation algorithm. There's a technicality, which allows this simple heuristic to perform arbitrarily bad. But with proper adjustments, we can get a 1/2 approximation: If the maximum possible cost is OPT, the heuristic guarantees a subset of items with cost at least OPT/2.
+2. A variation where we can take fractions of an item (e.g., half of item 3) can be solved efficiently using a greedy algorithm: Items are first sorted in decreasing **efficiency** (= cost / weight). Whole items are taken in order, until the knapsack can't carry any more item. Then, a fraction of the most efficient remaining item is taken. This approach cannot be used for 0-1 knapsacks. However, it can be used as an approximation algorithm. There's a technicality, which allows this simple heuristic to perform arbitrarily bad. But with proper adjustments, we can get a 1/2 approximation: If the maximum possible cost is OPT, the heuristic guarantees a subset of items with cost at least OPT/2.
 
-3. The problem belongs to [FPTAS](https://en.wikipedia.org/wiki/Polynomial-time_approximation_scheme) class of problems. This means that there exist an efficient approximation which can get arbitrarily close to the solution. More formally, for any 0-1 knapsack problem P and any ε>0, we can get a solution whose cost is at least (1-ε)OPT, while running in time polynomial in (|P|, 1/ε), where |P| is the size of the problem.
+3. The problem belongs to FPTAS  class of problems. This means that there exist an efficient approximation which can get arbitrarily close to the solution. More formally, for any 0-1 knapsack problem P and any ε>0, we can get a solution whose cost is at least (1-ε)OPT, while running in time polynomial in (|P|, 1/ε), where |P| is the size of the problem.
 
 There are numerous algorithms from which to choose.
 Indeed, based on the problem description, the problem size |P| is so small that even brute forcing the solution is feasible. 
@@ -95,15 +95,29 @@ That's how we responded to the preceding section's questions:
 
 The other design principles and decision are as follows:
 
-1. **Exploit immutability:** [Effective Java (EJ)](https://learning.oreilly.com/library/view/effective-java-3rd/9780134686097/), item 17 states "minimize mutability." There are so many good reasons to use immutable classes. For this project, it helped a lot when objects where passed between methods. Had it not been for immutability, it would have been possible for one method to inadvertently modify the object. It is a very helpful to annotate classes with [JCIP annotations](https://github.com/stephenc/jcip-annotations): For instance, immutable classes are annotated with `@Immutable`.
+* **Clean Code Practices:** The SOLID principles for clean coding are followed. The goal of the principles is the creation of software structures that is easy to modify and easy to understand.
+    - **Single Responsibility Principle:** The single responsibility principle says that each of our classes has to be only used for one purpose.
+    - **Open / Closed Principles:** The open/closed principle states that a piece of software is open for extension but closed for modification.
+    - **Liskov Substitution Principle:** This principle states that if we have a parent class and a child class, then we can interchange the parent and child class without getting incorrect results.
+    - **Interface Segregation Principle:** This principle states that if we have a parent class and a child class, then we can interchange the parent and child class without getting incorrect results.
+    - **Dependency Inversion Principle:** This principle states that high-level modules shouldn’t depend on low-level modules and they both should depend on abstractions, and abstractions shouldn’t depend upon details. Details should depend upon abstractions.
 
-2. **Use `final` classes:** This is a direct result of immutability, but even if a class is supposed to have subclasses, one can define it as `abstract` to prevent creation of instances. One the surface, this might seem contrary to the [open–closed principle](OCP), but it isn't. In fact, **EJ Item 18** explains how *inheritance violates encapsulation*, and that it's better to use composition over inheritance. Also, **EJ Item 19** lays down principles for designing a class for inheritance:
+* **Parallelism** `parallelStream` is used to split the task on multiple CPU cores. That is, each problem instance is run by the solver on its own CPU core.
 
- > The only way to test a class designed for inheritance is to write subclasses. If you omit a crucial protected member, trying to write a subclass will make the omission painfully obvious. Conversely, if several subclasses are written and none uses a protected member, you should probably make it private. Experience shows that three subclasses are usually sufficient to test an extendable class. One or more of these subclasses should be written by someone other than the superclass author.
+* **Exploit immutability:** Effective Java (EJ), item 17 states "minimize mutability." There are so many good reasons to use immutable classes. For this project, it helped a lot when objects where passed between methods. Had it not been for immutability, it would have been possible for one method to inadvertently modify the object. It is a very helpful to annotate classes with JCIP annotations: For instance, immutable classes are annotated with `@Immutable`.
+
+* **Extensive Exception Handling:**  By using exceptions to manage errors, Java programs have the following advantages over traditional error management techniques: 
+    
+    - Separating Error Handling Code from "Regular" Code
+    - Propagating Errors Up the Call Stack
+    - Grouping Error Types and Error Differentiation
+    
+* **Use `final` classes:** This is a direct result of immutability, but even if a class is supposed to have subclasses, one can define it as `abstract` to prevent creation of instances. One the surface, this might seem contrary to the open–closed principle (OCP), but it isn't. In fact, **EJ Item 18** explains how *inheritance violates encapsulation*, and that it's better to use composition over inheritance. Also, **EJ Item 19** lays down principles for designing a class for inheritance: 
+  > The only way to test a class designed for inheritance is to write subclasses. If you omit a crucial protected member, trying to write a subclass will make the omission painfully obvious. Conversely, if several subclasses are written and none uses a protected member, you should probably make it private. Experience shows that three subclasses are usually sufficient to test an extendable class. One or more of these subclasses should be written by someone other than the superclass author.
 
  The only class we designed for inheritance was `AbstractProblemSolver.java`, which has four subclasses: `BranchAndBound`, `BruteForce`, `DynamicProgramming` and `GreedyApproximation`.
 
-3. **Minimize access:** The member fields and member methods should have the minimal access. To quote **EJ Item 15** makes these statements:
+* **Minimize access:** The member fields and member methods should have the minimal access. To quote **EJ Item 15** makes these statements:
 
 > The single most important factor that distinguishes a well-designed component from a poorly designed one is the degree to which the component hides its internal data and other implementation details from other components. A well-designed component hides all its implementation details, cleanly separating its API from its implementation. Components then communicate only through their APIs and are oblivious to each others’ inner workings. This concept, known as information hiding or encapsulation, is a fundamental tenet of software design.
 
@@ -111,10 +125,10 @@ The other design principles and decision are as follows:
 
 While most members in our classes could be `private`, accessibility default (a.k.a. package-private) is chosen to facilitate testing in a more modular way (see next).
 
-4. **Use test-driven development (TDD):** Writing tests were a bliss. One can modify the design or the implementation, and in a blink of eye verify if it breaks anything. TDD is very useful, especially for agile development where refactoring occurs frequently.
+* **Use test-driven development (TDD):** Writing tests were a bliss. One can modify the design or the implementation, and in a blink of eye verify if it breaks anything. TDD is very useful, especially for agile development where refactoring occurs frequently.
 
-5. **Test coverage:** Once unite/integration tests are in place, one can check the coverage of those tests. Anything below 100% coverage shows some statements are not covered during the tests.
-6. Use `BigDecimal` to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods:
+* **Test coverage:** Once unite/integration tests are in place, one can check the coverage of those tests. Anything below 100% coverage shows some statements are not covered during the tests.
+* **Use `BigDecimal`** to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods:
 ```java
 BigDecimal a = new BigDecimal("12.345");
 BigDecimal b = new BigDecimal("6.78");
@@ -124,19 +138,93 @@ if(c.compareTo(d) > = 0)
 ...
 ```
 
-7. **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used [SonarLint plugin for IntelliJ IDEA](https://www.sonarlint.org/intellij/). Among other things, it computed the [Cognitive Complexity™](https://www.sonarsource.com/resources/white-papers/cognitive-complexity.html) of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
+* **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used SonarLint plugin for IntelliJ IDEA. Among other things, it computed the Cognitive Complexity  of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
+
+
 
 
 ## 4. Designing Solution
-//to do
+
+### 4.1 Packages
+The application consists of the following `packages` under the `eu.unite.challenge` top-level package: 
+- `algorithms` : contains implemented algorithms to solve the problem
+- `dataobjects` : contains the data objects and data structures
+- `exceptions` : contains our custom exceptions for this application
+- `utils` : contains file parser utility class
+- `validations`: contian constraint rules and regex-patterns classes for valiation
+
+### 4.2 Classes
+- `Application`: It is based in the top-level package, which contains the program entry point.
+
+- `algorithms`: The classes within the `algorithms` package are presented below:
+
+    - `ItemComparators`: Keeps comparators used by various algorithms. For instance, `priceWeight` is a comparator which first compares two items using their price, and if the prices are equal compares their weight.
+    - `AbstractProblemSolver` is the main class marked for inheritance. Various algorithms which want to solve the problem can implement this method. The constructor of  `AbstractProblemSolver` receives an instance of `RecordInstance`, calls `solve`, and initializes the field `Package package` given the response.
+    - `BruteForce` is the simplest extension of `AbstractPrblemSolver`, and solves the problem by exhaustively searching the solution space. Each item can be either in the solution or not. So, for `N` items, there are 2<sup>N</sup> possible solution. For each solution, the cost and weight are computed, and the winner is the one with highest cost (and if several such solutions exist, the one with least weight). For `N = 15`, there are at most `32768` possible solutions. The algorithm needs only a few milliseconds (on a laptop) to run. This class is used in unit tests to check the correctness of other algorithms on thousands of random problem instances.
+    - `GreedyApproximation` This algorithm greedily picks a subset of items until the weight constraint allows no more. It then compares the cost of this subset with the item with maximum cost, and the winner is returned. It can be shown that if this comparison is not made, the solution can be arbitrarily bad. However, the comparison allows a 1/2-approximation scheme. The unit tests show that this approximation factor is achieved over thousands of random problem instances.
+      
+      > While `GreedyApproximation` does not provide an exact solution, it performs very well on most instances. Even for those instances where the answer is suboptimal, the weight of the subset is often substantially lower. Furthermore, the algorithm only needs to sort items once, and then iterate over them (a total cost of `O(N log N)`), which is much better than other algorithms (for general cases, the worst case is conjectured to be exponential in `N`). At some point, the client may decide that the approximation is good enough, and is worth switching to in favor of faster running time.
+    - `DynamicProgramming` is a pseudo-polynomial algorithm: It is polynomial time in the value `W`, which denotes the number of possible weights (if the weights are fractional, we can multiply them by a common factor so that they are all integers.) It works by trading space for time: A large table is used to memoize state for subproblems. For this specific problem, the parameters are such that the running time of `DynamicProgramming` is worse than `BruteForce`, and it even uses much more memory.
+      
+    - `BranchAndBound` is similar to `BruteForce`, but it uses heuristics so that only plausible solutions in the solution space are traversed. The order of traversal is also optimized. The solution space can be seen as a binary tree. For node `i`, the left edge denotes leaving the `i+1` item, while the right edge denotes taking it. For each node, a *bound* is computed using the heuristic explained previously, and assuming that items can be partially taken. A subtree is pruned if (1) it violates the weight constraint, (2) if its bound is less than the current maximum cost achieved by traversing other nodes of the tree.
+
+    `BranchAndBound` is currently the default solver algorithm, but it can be changed in the `Application` class.
+
+- `dataobjects`: The classes within the `dataobjects` package are presented below:
+
+    - `Item` parses triples `a,b,c`, and stores them as the triple `int number, BigDecimal weight, BigDecimal price`.
+
+    - `RecordInstance` reads an input line as a `String`, and parses it into a maximum weight (`BigDecimal maxWeight`) and a list of items (`List<Item> items`). It also keeps a mapping `Map<Integer, Item> map` for fast retrieval of items given their label.
+
+    - `Package` represents a subset of items. It receives the indices (or labels) of items, and computes basic information such as the total cost and the total weight of the items in the subset.
+
+
+- `exceptions`: The classes within the `exceptions` package are presented below:
+    - `FormatException` is a super class for various exceptions thrown while parsing the input file.
+    - `FileFormatException` is thrown when the input file is empty or is larger specified size. 
+    - `LineFormatException` is thrown when a line of the input file is malformed. For instance, it is not in the format a:b
+    - `ItemFormatException` is thrown when an item on a specific line is malformed. For instance, it is not in the format a,b,c
+    - `OutOfRangeProblemSizeException` is thrown if the problem instance is greater than the problem specified size. 
+
+- `utils`: The classes within the `utils` package are presented below:
+
+    - `FileParserUtility`:   loads the input file, and reads it line-by-line. Each line is passed to an instance of the class `RecordInstance` for processing.
+
+- `validations`: The classes within the `validations` package are presented below:
+    - `ConstraintRule`: It contains constriant rules such as the default file charset, Package Scale, ...
+    - `RegexPatternsValidator` contains the regular expression patterns used by other classes. The patterns are static members of the class, and are pre-compiled for increased efficiency.
+
 ## 5. Main Tasks of Development and Development Progress Tracking Through Github Issues
-//to do
+- [ Solution Constraints Rules and Input Validation with Regex and Patterns #1](https://github.com/mohbadar/unite-package-challenge/issues/1)
+- [ Creation of Data Objects #2](https://github.com/mohbadar/unite-package-challenge/issues/2)
+- [ Creation of FileParserUtility Class #3](https://github.com/mohbadar/unite-package-challenge/issues/3)
+- [ Creation of AbstractProblemSolver  #4](https://github.com/mohbadar/unite-package-challenge/issues/4)
+- [ BruteForce Algorithm Implementation #5](https://github.com/mohbadar/unite-package-challenge/issues/5)
+- [ Branch And Bound Algorithm Implementation #6](https://github.com/mohbadar/unite-package-challenge/issues/6)
+- [ Dynamic Programming Algorithm Implemenation #7 ](https://github.com/mohbadar/unite-package-challenge/issues/7)
+- [ GreedyApproximation Algorithm Implemenation #8](https://github.com/mohbadar/unite-package-challenge/issues/8)
+    
 ## 6. Running the code
-//to do
+
+1. To pass command line arguments to your Spring Boot app when running it with Maven use the -Dspring-boot.run.arguments
+`````java
+mvn spring-boot:run -Dspring-boot.run.arguments="/file-absolute-path/sampleInpute.txt"
+`````
+
+2. Or 
+````java
+mvn package
+java -jar target/unite-challenge-1.0.jar /file-absolute-path/sampleInpute.txt
+````
 ## 7. Testing the code
-//to do
+
+- The test coverage is 100% 
+![](doc/test-coverage.PNG)
+
+- All tests (3169) are successfully Passed
+![](doc/Test-Cases.PNG)
+
 ## 8. References
-//to do
 - https://en.wikipedia.org/wiki/Knapsack_problem
 - https://en.wikipedia.org/wiki/List_of_knapsack_problems
 - https://en.wikipedia.org/wiki/NP-completeness

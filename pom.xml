@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>eu.unite</groupId>
 	<artifactId>unite-challenge</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>unite-challenge</name>
 	<description>Assignment of Package Challenge By Unite</description>
 	<properties>

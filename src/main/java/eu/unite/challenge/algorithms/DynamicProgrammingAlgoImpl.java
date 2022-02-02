@@ -35,16 +35,6 @@ public class DynamicProgrammingAlgoImpl extends AbstractProblemSolver {
     }
 
     /**
-     * @inheritDoc
-     */
-    @Override
-    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
-        final int maxWeightScale = problemInstance.getMaxWeightScale();
-        final List<Item> items = problemInstance.getItems();
-        return dpSolve(problemInstance.getMaxWeight(), maxWeightScale, items);
-    }
-
-    /**
      * This method implements the actual dynamic programming code
      *
      * @param maxWeight      The maximum weight of items
@@ -177,6 +167,16 @@ public class DynamicProgrammingAlgoImpl extends AbstractProblemSolver {
                 remainingWeight -= intWeights[i - 1];
             }
         return indices;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
+        final int maxWeightScale = problemInstance.getMaxWeightScale();
+        final List<Item> items = problemInstance.getItems();
+        return dpSolve(problemInstance.getMaxWeight(), maxWeightScale, items);
     }
 
 }

@@ -204,13 +204,16 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
      */
     @Immutable
     static final class Node {
+        static final Comparator<Node> boundPriceWeight =
+                Comparator.comparing(Node::getBound)
+                        .thenComparing(Node::getPrice)
+                        .thenComparing(Node::getWeight, Comparator.reverseOrder());
         @Getter
         final BigDecimal weight;
         @Getter
         final BigDecimal price;
         @Getter
         final BigDecimal bound;
-
         final int level;
         final SortedSet<Integer> labels;
 
@@ -227,11 +230,6 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
             this.bound = bound;
             this.labels = Collections.unmodifiableSortedSet(new TreeSet<>(labels));
         }
-
-        static final Comparator<Node> boundPriceWeight =
-                Comparator.comparing(Node::getBound)
-                        .thenComparing(Node::getPrice)
-                        .thenComparing(Node::getWeight, Comparator.reverseOrder());
     }
 }
 
