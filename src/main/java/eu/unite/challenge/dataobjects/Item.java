@@ -13,7 +13,9 @@ import static eu.unite.challenge.validations.ConstraintRules.*;
 import static eu.unite.challenge.validations.RegexPatternsValidator.*;
 
 /**
- * This class parses triples "n,w,p", and stores them as the three fields number, weight, and price. <p>  It also computes efficiency = p/w.
+ * This class parses triples "n,w,p",
+ * and stores them as the three fields number, weight, and price. <p>
+ * It also computes efficiency = p/w.
  */
 @Getter
 @Immutable

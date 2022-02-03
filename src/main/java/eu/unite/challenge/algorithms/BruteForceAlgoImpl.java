@@ -18,8 +18,8 @@ import java.util.TreeSet;
  * weight are computed, and the winner is the one with highest cost
  * (and if several such solutions exist, the one with least weight).
  * For N = 15, there are at most 32,768 possible solutions.
- * The algorithm needs only a few milliseconds (on a Surface Pro 7
- * laptop) to run. This class is used in unit tests to check the
+ * The algorithm needs only a few milliseconds (on a laptop) to run.
+ * This class is used in unit tests to check the
  * correctness of other algorithms on thousands of random problem instances.
  */
 @Immutable

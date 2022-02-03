@@ -1,6 +1,6 @@
 # Unite Package Challenge
 
-0) Problem Description
+1) Problem Description
 1) Requirements Analysis
 2) Design principles and Decisions
 3) Designing Solution
@@ -128,19 +128,17 @@ While most members in our classes could be `private`, accessibility default (a.k
 * **Use test-driven development (TDD):** Writing tests were a bliss. One can modify the design or the implementation, and in a blink of eye verify if it breaks anything. TDD is very useful, especially for agile development where refactoring occurs frequently.
 
 * **Test coverage:** Once unite/integration tests are in place, one can check the coverage of those tests. Anything below 100% coverage shows some statements are not covered during the tests.
-* **Use `BigDecimal`** to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods:
-```java
-BigDecimal a = new BigDecimal("12.345");
-BigDecimal b = new BigDecimal("6.78");
-BigDecimal c = a.subtract(BigDecimal.TEN).multiply(b);
-...
-if(c.compareTo(d) > = 0)
-...
-```
+* **Use `BigDecimal`** to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods.
 
 * **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used SonarLint plugin for IntelliJ IDEA. Among other things, it computed the Cognitive Complexity  of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
 
-
+* **Technologies:** The following technologies have been used for the development:
+    - Java 11
+    - Spring Boot
+    - lombok
+    - Google Guava
+    - jcip-annotations
+    - Spring Test
 
 
 ## 4. Designing Solution
@@ -218,6 +216,9 @@ mvn spring-boot:run -Dspring-boot.run.arguments="/file-absolute-path/sampleInput
 mvn package
 java -jar target/unite-challenge-1.0.jar /file-absolute-path/sampleInpute.txt
 ````
+#### JavaDoc  
+Browse [Application Java Doc](doc/javadoc/index.html) Or On [GitHub](https://github.com/mohbadar/unite-package-challenge/tree/master/doc/javadoc)
+
 ## 7. Testing the code
 
 To run tests
@@ -232,7 +233,6 @@ mvn clean test
 ![](doc/images/Test-Cases.PNG)
 
 
-#### JavaDoc Generation 
 
 
 ## 8. References
