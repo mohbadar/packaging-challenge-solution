@@ -30,8 +30,8 @@ import static eu.unite.challenge.validations.ConstraintRules.MAX_INT_WEIGHT_FOR_
 public class DynamicProgrammingAlgoImpl extends AbstractProblemSolver {
     private static final Logger logger = LoggerFactory.getLogger(DynamicProgrammingAlgoImpl.class);
 
-    public DynamicProgrammingAlgoImpl(final RecordInstance problemInstance) {
-        super(problemInstance);
+    public DynamicProgrammingAlgoImpl(final RecordInstance recordInstance) {
+        super(recordInstance);
     }
 
     /**

@@ -24,12 +24,12 @@ import java.util.TreeSet;
  */
 @Immutable
 public final class BruteForceAlgoImpl extends AbstractProblemSolver {
-    public BruteForceAlgoImpl(final RecordInstance problemInstance) {
-        super(problemInstance);
+    public BruteForceAlgoImpl(final RecordInstance recordInstance) {
+        super(recordInstance);
     }
 
-    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
-        final List<Item> items = problemInstance.getItems();
+    protected SortedSet<Integer> solve(final RecordInstance recordInstance) {
+        final List<Item> items = recordInstance.getItems();
         final int count = items.size();
 
         SortedSet<Integer> solution = new TreeSet<>();
@@ -58,7 +58,7 @@ public final class BruteForceAlgoImpl extends AbstractProblemSolver {
                 long mask = (i & (1L << j));
                 Item item = items.get(j);
                 BigDecimal next = totalWeight.add(item.getWeight());
-                if (mask != 0 && next.compareTo(problemInstance.getMaxWeight()) <= 0) {
+                if (mask != 0 && next.compareTo(recordInstance.getMaxWeight()) <= 0) {
                     subset.add(item.getNumber());
                     totalWeight = next;
                     totalPrice = totalPrice.add(item.getPrice());

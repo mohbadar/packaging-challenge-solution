@@ -39,8 +39,8 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
     private BigDecimal bestWeight;
     private SortedSet<Integer> bestLabels;
 
-    public BranchAndBoundAlgoImpl(final RecordInstance problemInstance) {
-        super(problemInstance);
+    public BranchAndBoundAlgoImpl(final RecordInstance recordInstance) {
+        super(recordInstance);
     }
 
     /**

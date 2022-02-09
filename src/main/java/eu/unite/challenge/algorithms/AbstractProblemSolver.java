@@ -22,15 +22,15 @@ public abstract class AbstractProblemSolver {
      * calls solve on it, and initializes the field {@code bag}
      * upon receiving the response.
      *
-     * @param problemInstance An instance of the problem
+     * @param recordInstance An instance of the problem
      */
-    AbstractProblemSolver(final RecordInstance problemInstance) {
-        if (problemInstance == null) {
+    AbstractProblemSolver(final RecordInstance recordInstance) {
+        if (recordInstance == null) {
             bag = null;
             return;
         }
-        SortedSet<Integer> sortedSolution = solve(problemInstance);
-        bag = new Package(problemInstance.getMap(), sortedSolution);
+        SortedSet<Integer> sortedSolution = solve(recordInstance);
+        bag = new Package(recordInstance.getMap(), sortedSolution);
     }
 
     @Override

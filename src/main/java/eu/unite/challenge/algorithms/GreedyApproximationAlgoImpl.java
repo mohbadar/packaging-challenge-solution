@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 public final class GreedyApproximationAlgoImpl extends AbstractProblemSolver {
     private static final Logger logger = LoggerFactory.getLogger(GreedyApproximationAlgoImpl.class);
 
-    public GreedyApproximationAlgoImpl(final RecordInstance problemInstance) {
-        super(problemInstance);
+    public GreedyApproximationAlgoImpl(final RecordInstance recordInstance) {
+        super(recordInstance);
     }
 
     /**
