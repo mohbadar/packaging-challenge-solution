@@ -41,8 +41,8 @@ public abstract class AbstractProblemSolver {
     /**
      * Solves the package problem for the given instance.
      *
-     * @param problemInstance An instance of the problem
+     * @param recordInstance An instance of the problem
      * @return A sorted set containing the indices of items in the solution
      */
-    protected abstract SortedSet<Integer> solve(final RecordInstance problemInstance);
+    protected abstract SortedSet<Integer> solve(final RecordInstance recordInstance);
 }

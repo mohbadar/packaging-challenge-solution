@@ -35,13 +35,13 @@ public final class GreedyApproximationAlgoImpl extends AbstractProblemSolver {
     /**
      * @inheritDoc
      */
-    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
+    protected SortedSet<Integer> solve(final RecordInstance recordInstance) {
         /*
          * Sort items in decreasing order of efficiency.
          * If two items have the same efficiency, prefer the
          * one with higher price.
          */
-        final List<Item> sorted = problemInstance.getItems().stream()
+        final List<Item> sorted = recordInstance.getItems().stream()
                 .sorted(ItemComparators.efficiencyPrice.reversed())
                 .collect(Collectors.toUnmodifiableList());
 
@@ -61,7 +61,7 @@ public final class GreedyApproximationAlgoImpl extends AbstractProblemSolver {
          */
         for (Item item : sorted) {
             BigDecimal tmpWeight = weight.add(item.getWeight());
-            if (tmpWeight.compareTo(problemInstance.getMaxWeight()) <= 0) {
+            if (tmpWeight.compareTo(recordInstance.getMaxWeight()) <= 0) {
                 weight = tmpWeight;
                 indices.add(item.getNumber());
                 price = price.add(item.getPrice());

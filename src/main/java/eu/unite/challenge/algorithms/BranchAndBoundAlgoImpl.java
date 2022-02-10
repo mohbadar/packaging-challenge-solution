@@ -47,13 +47,13 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
      * @inheritDoc
      */
     @Override
-    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
+    protected SortedSet<Integer> solve(final RecordInstance recordInstance) {
         /*
          * Sort the items by their efficiency, then price.
          * This will *possibly* help the algorithm to achieve
          * its solution faster.
          */
-        sorted = problemInstance.getItems().stream()
+        sorted = recordInstance.getItems().stream()
                 .sorted(ItemComparators.efficiencyPrice.reversed())
                 .collect(Collectors.toUnmodifiableList());
 
@@ -64,7 +64,7 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
          * This will *possibly* help the algorithm to achieve
          * its solution faster.
          */
-        maxWeight = problemInstance.getMaxWeight();
+        maxWeight = recordInstance.getMaxWeight();
         queue = new PriorityQueue<>(Node.boundPriceWeight.reversed());
 
         /*

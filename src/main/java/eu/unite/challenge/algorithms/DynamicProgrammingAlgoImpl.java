@@ -173,10 +173,10 @@ public class DynamicProgrammingAlgoImpl extends AbstractProblemSolver {
      * @inheritDoc
      */
     @Override
-    protected SortedSet<Integer> solve(final RecordInstance problemInstance) {
-        final int maxWeightScale = problemInstance.getMaxWeightScale();
-        final List<Item> items = problemInstance.getItems();
-        return dpSolve(problemInstance.getMaxWeight(), maxWeightScale, items);
+    protected SortedSet<Integer> solve(final RecordInstance recordInstance) {
+        final int maxWeightScale = recordInstance.getMaxWeightScale();
+        final List<Item> items = recordInstance.getItems();
+        return dpSolve(recordInstance.getMaxWeight(), maxWeightScale, items);
     }
 
 }

@@ -28,9 +28,9 @@ public class FileParserUtilityTest {
     void testGood() throws IOException {
         String path = setupGoodPath();
         FileParserUtility fileParser = new FileParserUtility(path);
-        List<RecordInstance> problemInstances = assertDoesNotThrow(fileParser::parse);
-        assertEquals(4, problemInstances.size());
-        problemInstances.forEach(s -> logger.trace("{}", s == null ? "null" : s.getMaxWeight()));
+        List<RecordInstance> recordInstances = assertDoesNotThrow(fileParser::parse);
+        assertEquals(4, recordInstances.size());
+        recordInstances.forEach(s -> logger.trace("{}", s == null ? "null" : s.getMaxWeight()));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class FileParserUtilityTest {
                 List.of("DUMMY", "8 : (1,15.3,€34)", "DUMMY"));
         String path = getTempFile(text);
         FileParserUtility fileParser = new FileParserUtility(path);
-        List<RecordInstance> problemInstances = assertDoesNotThrow(fileParser::parse);
-        assertEquals(3, problemInstances.size());
-        problemInstances.forEach(s -> logger.trace("{}", s == null ? "null" : s.getMaxWeight()));
+        List<RecordInstance> recordInstances = assertDoesNotThrow(fileParser::parse);
+        assertEquals(3, recordInstances.size());
+        recordInstances.forEach(s -> logger.trace("{}", s == null ? "null" : s.getMaxWeight()));
     }
 
     @Test
