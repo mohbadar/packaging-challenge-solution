@@ -19,7 +19,6 @@ public final class ItemComparators {
     // If their efficiency is equal, the expensive one wins
     public static final Comparator<Item> efficiencyPrice =
             Comparator.comparing(Item::getEfficiency).thenComparing(Item::getPrice);
-
     private ItemComparators() {
     }
 

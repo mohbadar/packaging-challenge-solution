@@ -103,7 +103,7 @@ public final class BranchAndBoundAlgoImpl extends AbstractProblemSolver {
              * replace the best result.
              */
             if (n != null) {
-                final int cmp = n.price.compareTo(bestPrice);
+                    final int cmp = n.price.compareTo(bestPrice);
                 if ((cmp > 0) || (cmp == 0 && n.weight.compareTo(bestWeight) < 0)) {
                     bestPrice = n.price;
                     bestWeight = n.weight;

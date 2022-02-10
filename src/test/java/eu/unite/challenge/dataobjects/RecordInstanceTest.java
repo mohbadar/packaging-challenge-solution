@@ -7,11 +7,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static eu.unite.challenge.validations.ConstraintRules.MAX_ITEMS_PER_LINE;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
 class RecordInstanceTest {
     private static final transient Logger logger = LoggerFactory.getLogger(RecordInstanceTest.class);
 

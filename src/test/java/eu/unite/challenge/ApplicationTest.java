@@ -1,6 +1,7 @@
 package eu.unite.challenge;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
@@ -8,6 +9,7 @@ import static eu.unite.challenge.utils.FileParserUtilityTest.setupGoodPath;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
 class ApplicationTest {
 
     @Test

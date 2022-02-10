@@ -1,6 +1,7 @@
 package eu.unite.challenge.dataobjects;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class PackageTest {
 
     @Test

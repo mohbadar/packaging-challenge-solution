@@ -12,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class DynamicProgrammingAlgoImplTest {
     private static final Logger logger = LoggerFactory.getLogger(DynamicProgrammingAlgoImpl.class);
 

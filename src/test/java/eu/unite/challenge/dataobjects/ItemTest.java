@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ItemTest {
     private static final Logger logger = LoggerFactory.getLogger(ItemTest.class);
 

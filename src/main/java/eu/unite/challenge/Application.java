@@ -2,6 +2,7 @@ package eu.unite.challenge;
 
 import eu.unite.challenge.algorithms.AbstractProblemSolver;
 import eu.unite.challenge.algorithms.BranchAndBoundAlgoImpl;
+import eu.unite.challenge.algorithms.DynamicProgrammingAlgoImpl;
 import eu.unite.challenge.exceptions.FileFormatException;
 import eu.unite.challenge.utils.FileParserUtility;
 import org.slf4j.Logger;
@@ -25,15 +26,11 @@ public class Application {
             logger.error("Please give the correct path to test cases as an argument.");
             return;
         }
+
         FileParserUtility fileParserUtility = new FileParserUtility(args[0]);
 
-        /*
-         * The default solver is BranchAndBoundAlgoImpl, but
-         * it can be changed here. Also, notice the use of
-         * parallelStream() for further efficiency
-         */
         List<AbstractProblemSolver> abstractProblemSolvers = fileParserUtility.parse().parallelStream()
-                .map(BranchAndBoundAlgoImpl::new)
+                .map(DynamicProgrammingAlgoImpl::new)
                 .collect(Collectors.toList());
 
         logger.info("------");

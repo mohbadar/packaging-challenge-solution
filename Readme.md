@@ -54,7 +54,7 @@ The sample output for the sample input file above should look like this:
 ```
 
 ## 2. Requirements Analysis
-This problem belongs to a well-known family of problems called knapsack problems. The several variants  of this problem can be found in this link. This problem has the following characterizations: 
+This problem belongs to a well-known family of problems called knapsack problems. The several variants  of this problem can be found. This problem has the following characterizations: 
 
 1. It's a 0-1 knapsack: Each item is either taken or left.
 2. If two subsets of items have equal costs, the one which is lighter (has lower weight) prevails.
@@ -65,8 +65,7 @@ Like 0-1 knapsack, the problem is an NP-complete problem, meaning there is curre
 
 2. A variation where we can take fractions of an item (e.g., half of item 3) can be solved efficiently using a greedy algorithm: Items are first sorted in decreasing **efficiency** (= cost / weight). Whole items are taken in order, until the knapsack can't carry any more item. Then, a fraction of the most efficient remaining item is taken. This approach cannot be used for 0-1 knapsacks. However, it can be used as an approximation algorithm. There's a technicality, which allows this simple heuristic to perform arbitrarily bad. But with proper adjustments, we can get a 1/2 approximation: If the maximum possible cost is OPT, the heuristic guarantees a subset of items with cost at least OPT/2.
 
-3. The problem belongs to FPTAS  class of problems. This means that there exist an efficient approximation which can get arbitrarily close to the solution. More formally, for any 0-1 knapsack problem P and any ε>0, we can get a solution whose cost is at least (1-ε)OPT, while running in time polynomial in (|P|, 1/ε), where |P| is the size of the problem.
-
+3. The problem belongs to fully polynomial-time approximation scheme (FPTAS)  class of problems. This means that there exist an efficient approximation which can get arbitrarily close to the solution.
 There are numerous algorithms from which to choose.
 Indeed, based on the problem description, the problem size |P| is so small that even brute forcing the solution is feasible. 
 
@@ -121,16 +120,14 @@ The other design principles and decision are as follows:
 
 > The single most important factor that distinguishes a well-designed component from a poorly designed one is the degree to which the component hides its internal data and other implementation details from other components. A well-designed component hides all its implementation details, cleanly separating its API from its implementation. Components then communicate only through their APIs and are oblivious to each others’ inner workings. This concept, known as information hiding or encapsulation, is a fundamental tenet of software design.
 
-> For members of public classes, a huge increase in accessibility occurs when the access level goes from package-private to protected. A protected member is part of the class’s exported API and must be supported forever. Also, a protected member of an exported class represents a public commitment to an implementation detail (Item 19). The need for protected members should be relatively rare.
-
-While most members in our classes could be `private`, accessibility default (a.k.a. package-private) is chosen to facilitate testing in a more modular way (see next).
+While most members in our classes could be `private`, accessibility default (a.k.a. package-private) is chosen to facilitate testing in a more modular way.
 
 * **Use test-driven development (TDD):** Writing tests were a bliss. One can modify the design or the implementation, and in a blink of eye verify if it breaks anything. TDD is very useful, especially for agile development where refactoring occurs frequently.
 
 * **Test coverage:** Once unite/integration tests are in place, one can check the coverage of those tests. Anything below 100% coverage shows some statements are not covered during the tests.
 * **Use `BigDecimal`** to hold real numbers. `float` and `double` are notorious for handling real numbers, and they are forbidden for storing monetary values (due to rounding issues). Unfortunately, using `BigDecimal` reduced the code readability, since Java does not support operator overloading. Therefore, operations and relations are implemented via methods.
 
-* **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used SonarLint plugin for IntelliJ IDEA. Among other things, it computed the Cognitive Complexity  of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
+* **Use a linter:** Linters helps in following best practices, as well as a unified convention. I used SonarLint plugin for IntelliJ IDEA. Among other things, it computed the **Cognitive Complexity**  of the code. In a few cases where the method complexity was beyond the allowable 15, it warned me and I simplidied the code. The result was much better!
 
 * **Technologies:** The following technologies have been used for the development:
     - Java 11

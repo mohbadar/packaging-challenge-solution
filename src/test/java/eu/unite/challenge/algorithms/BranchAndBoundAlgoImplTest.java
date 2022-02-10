@@ -7,12 +7,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class BranchAndBoundAlgoImplTest {
     private static final Logger logger = LoggerFactory.getLogger(BranchAndBoundAlgoImplTest.class);
 

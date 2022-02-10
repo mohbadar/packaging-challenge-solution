@@ -6,6 +6,7 @@ import eu.unite.challenge.exceptions.FileFormatException;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import static eu.unite.challenge.validations.ConstraintRules.*;
 import static eu.unite.challenge.validations.ConstraintRules.FILE_ENCODING;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class FileParserUtilityTest {
     private static final Logger logger = LoggerFactory.getLogger(FileParserUtility.class);
 
