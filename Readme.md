@@ -1,4 +1,4 @@
-# Unite Package Challenge
+# Packaging Challenge
 
 1) Problem Description
 1) Requirements Analysis
